@@ -78,3 +78,5 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.restrictTo = function (req, res, next) {};
