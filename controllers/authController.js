@@ -79,4 +79,13 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.restrictTo = function (req, res, next) {};
+exports.restrictTo = (...allowedRoles) =>
+  catchAsync(async (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      next(
+        new AppError("you don't have permission to preform this action", 403)
+      );
+    }
+
+    next();
+  });

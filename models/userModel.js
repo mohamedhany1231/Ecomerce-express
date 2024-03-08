@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
     default: Date.now(),
   },
   passwordChangedAt: { type: Date, default: Date.now() },
+  role: { type: String, default: "user", enum: ["admin", "user"] },
 });
 userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
