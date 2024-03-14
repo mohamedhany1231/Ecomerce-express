@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const booksRouter = require("./routers/bookRouter");
 const usersRouter = require("./routers/userRouter");
@@ -26,6 +27,7 @@ app.use(
 
 app.use(helmet());
 app.use(cors());
+app.use(cookieParser());
 
 app.use("/api/v1/books", booksRouter);
 app.use("/api/v1/users", usersRouter);
