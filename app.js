@@ -13,6 +13,13 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
 
+const fs = require("fs");
+const dir = "public/img/books";
+
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
