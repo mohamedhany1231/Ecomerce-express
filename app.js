@@ -24,6 +24,7 @@ if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
 
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "10KB" }));
 app.use(
   rateLimit({
