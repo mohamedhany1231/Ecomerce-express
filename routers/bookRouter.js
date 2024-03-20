@@ -14,7 +14,11 @@ router
 router
   .route("/:id")
   .get(bookController.getBook)
-  .patch(bookController.updateBook)
+  .patch(
+    bookController.uploadBookImages,
+    bookController.resizeBookImages,
+    bookController.updateBook
+  )
   .delete(bookController.deleteBook);
 
 router.use("/:bookId/add-review", reviewRouter);
