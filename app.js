@@ -47,6 +47,7 @@ app.use("/api/v1/reviews", reviewsRouter);
 app.use("*", (req, res, next) => {
   res.status(404).json({ status: "failure", message: "route does not exist" });
 });
+
 app.use(globalErrorHandler);
 
 module.exports = app;
