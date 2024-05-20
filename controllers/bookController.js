@@ -12,8 +12,8 @@ const factoryController = require("./factoryController.js");
 const multerStorage = multer.memoryStorage();
 
 cloudinary.config({
-  cloud_name: "dlg5dmvws",
-  api_key: "459421256948277",
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_SECRET,
   secure: true,
 });
@@ -33,7 +33,6 @@ exports.uploadBookImages = upload.fields([
 ]);
 
 exports.resizeBookImages = catchAsync(async (req, res, next) => {
-  console.log("hi");
   if (req.files.imageCover) {
     req.body.imageCover = `book-${req.params.id}-${Date.now()}-cover.jpeg`;
     await sharp(req.files.imageCover[0].buffer)
@@ -55,7 +54,7 @@ exports.resizeBookImages = catchAsync(async (req, res, next) => {
     req.body.images = [];
     await Promise.all(
       req.files.images.map(async (img, i) => {
-        const fileName = `book-${req.params.id}-${Date.now()}-${i + 1}`;
+        const fileName = `book-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
 
         await sharp(req.files.images[0].buffer)
           .resize(1920, 1080)

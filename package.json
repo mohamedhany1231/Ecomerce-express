@@ -4,7 +4,8 @@
   "description": "ecomerce project",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "NODE_ENV='dev' nodemon server.js ",
+    "start:prod": "nodemon server.js"
   },
   "author": "mohamed hany",
   "license": "ISC",

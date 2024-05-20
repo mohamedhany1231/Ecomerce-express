@@ -30,7 +30,7 @@ const productsSchema = new mongoose.Schema({
   ratingsAverage: { type: Number, default: 0 },
   ratingsCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now() },
-  imageCover: { type: String, required: [true, "book must have an image"] },
+  imageCover: { type: String },
   images: [String],
 });
 

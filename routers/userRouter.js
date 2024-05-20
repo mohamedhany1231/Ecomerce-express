@@ -21,7 +21,11 @@ userRouter
 userRouter
   .route("/:id")
   .get(userController.getUser)
-  .patch(userController.updateUser)
+  .patch(
+    userController.uploadPicture,
+    userController.resizeImage,
+    userController.updateUser
+  )
   .delete(userController.deleteUser);
 
 module.exports = userRouter;
