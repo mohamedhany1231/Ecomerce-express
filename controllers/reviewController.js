@@ -5,8 +5,8 @@ const Book = require("../models/bookModel");
 const Review = require("../models/reviewModel");
 
 exports.setBookUserBody = catchAsync(async (req, res, next) => {
-  req.body.user = req.user._id;
-  req.body.book = req.params.bookId;
+  if (!req.body.user) req.body.user = req.user._id;
+  if (!req.body.book) req.body.book = req.params.bookId;
   next();
 });
 

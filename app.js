@@ -29,7 +29,9 @@ app.use(
 );
 
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({ origin: ["127.0.0.1", "instant-mart.vercel.app"], credentials: true })
+);
 app.use(cookieParser());
 app.use(compression());
 
