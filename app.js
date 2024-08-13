@@ -14,16 +14,16 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://127.0.0.1:5173",
-      "https://instant-mart.vercel.app",
-    ],
-    credentials: true,
-  })
-);
+const corsConfig = {
+  origin: [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://instant-mart.vercel.app",
+  ],
+  credentials: true,
+};
+app.use(cors(corsConfig));
+app.options("*", corsConfig);
 app.use(morgan("dev"));
 if (process.env.NODE_ENV !== "production") {
 }
