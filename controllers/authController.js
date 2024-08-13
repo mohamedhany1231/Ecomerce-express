@@ -17,14 +17,11 @@ const sendSignToken = (res, user, statusCode, req) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
+    secure: true,
     httpOnly: true,
     sameSite: "none",
-    partitioned: true,
-    path: "/",
     domain:
       process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
-
-    secure: true,
   };
   res.cookie("jwt", token, cookieOptions);
   user.password = undefined;
@@ -112,14 +109,12 @@ exports.restrictTo = (...allowedRoles) =>
 exports.logout = (req, res, next) => {
   res.cookie("jwt", "signedOut", {
     expires: new Date(Date.now() + 10 * 1000),
+    secure: true,
     httpOnly: true,
     sameSite: "none",
-    partitioned: true,
-    path: "/",
+
     domain:
       process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
-
-    secure: true,
   });
   res.status(200).json({ status: "success" });
 };
