@@ -10,14 +10,21 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRE,
   });
 
-const sendSignToken = (res, user, statusCode) => {
+const sendSignToken = (res, user, statusCode, req) => {
   const token = signToken(user.id);
+
+  const origin = req.get("origin") || "http://localhost:5173";
+
+  const domain = new URL(origin).hostname;
+  console.log(domain);
+
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
     sameSite: "lax",
+    domain,
   };
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   res.cookie("jwt", token, cookieOptions);
@@ -34,7 +41,7 @@ const sendSignToken = (res, user, statusCode) => {
 exports.signup = catchAsync(async (req, res, next) => {
   const { email, password, confirmPassword, name } = req.body;
   const user = await User.create({ email, password, confirmPassword, name });
-  sendSignToken(res, user, 201);
+  sendSignToken(res, user, 201, req);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -47,7 +54,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("invalid log in credentials", 400));
   }
 
-  sendSignToken(res, user, 200);
+  sendSignToken(res, user, 200, req);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
