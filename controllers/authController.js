@@ -11,19 +11,20 @@ const signToken = (id) =>
   });
 
 const sendSignToken = (res, user, statusCode, req) => {
+  console.log("sendSignToken");
   const token = signToken(user.id);
 
   const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
-    secure: true,
     httpOnly: true,
-
-    path: "/",
+    secure: true,
     sameSite: "none",
     domain:
       process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+
+    path: "/",
   };
 
   console.log(cookieOptions);
@@ -45,6 +46,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
+  console.log("logging in");
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new AppError("please provide email and password", 400));
