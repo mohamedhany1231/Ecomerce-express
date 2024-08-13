@@ -30,7 +30,7 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "10KB" }));
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(
   rateLimit({
     limit: 50,
