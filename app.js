@@ -14,6 +14,9 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
 const corsConfig = {
   origin: [
     "http://localhost:5173",

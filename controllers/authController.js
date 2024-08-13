@@ -19,9 +19,11 @@ const sendSignToken = (res, user, statusCode, req) => {
     ),
     secure: true,
     httpOnly: true,
+
+    path: "/",
     sameSite: "none",
-    domain:
-      process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
+    // domain:
+    //   process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
   };
   res.cookie("jwt", token, cookieOptions);
   user.password = undefined;
@@ -113,8 +115,9 @@ exports.logout = (req, res, next) => {
     httpOnly: true,
     sameSite: "none",
 
-    domain:
-      process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
+    path: "/",
+    // domain:
+    //   process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
   });
   res.status(200).json({ status: "success" });
 };
