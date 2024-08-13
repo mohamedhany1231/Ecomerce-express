@@ -28,10 +28,18 @@ app.use(
     message: "Rate limit exceeded",
   })
 );
-app.use(helmet());
 app.use(
-  cors({ origin: ["127.0.0.1", "instant-mart.vercel.app"], credentials: true })
+  cors({
+    origin: [
+      "http://localhost",
+      "http://127.0.0.1",
+      "https://instant-mart.vercel.app",
+    ],
+    credentials: true,
+  })
 );
+app.use(helmet());
+
 app.use(cookieParser());
 app.use(compression());
 
