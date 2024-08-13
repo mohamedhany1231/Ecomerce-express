@@ -20,10 +20,12 @@ const sendSignToken = (res, user, statusCode, req) => {
     httpOnly: true,
     sameSite: "none",
     partitioned: true,
+    path: "/",
     domain:
       process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
+
+    secure: true,
   };
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   res.cookie("jwt", token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
