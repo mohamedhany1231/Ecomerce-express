@@ -14,12 +14,13 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
 
+app.use(morgan("dev"));
 if (process.env.NODE_ENV !== "production") {
-  app.use(morgan("dev"));
 }
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "10KB" }));
+app.set("trust proxy", 1);
 app.use(
   rateLimit({
     limit: 50,
@@ -27,7 +28,6 @@ app.use(
     message: "Rate limit exceeded",
   })
 );
-
 app.use(helmet());
 app.use(
   cors({ origin: ["127.0.0.1", "instant-mart.vercel.app"], credentials: true })
