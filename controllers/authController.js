@@ -19,6 +19,7 @@ const sendSignToken = (res, user, statusCode, req) => {
     ),
     httpOnly: true,
     sameSite: "none",
+    partitioned: true,
     domain:
       process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
   };
