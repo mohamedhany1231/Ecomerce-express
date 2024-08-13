@@ -113,6 +113,13 @@ exports.logout = (req, res, next) => {
   res.cookie("jwt", "signedOut", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
+    sameSite: "none",
+    partitioned: true,
+    path: "/",
+    domain:
+      process.env.NODE_ENV !== "development" && "ecomerce-3qnz.onrender.com",
+
+    secure: true,
   });
   res.status(200).json({ status: "success" });
 };
