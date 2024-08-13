@@ -23,7 +23,7 @@ const corsConfig = {
   credentials: true,
 };
 app.use(cors(corsConfig));
-app.options("*", corsConfig);
+app.options("*", cors(corsConfig));
 app.use(morgan("dev"));
 if (process.env.NODE_ENV !== "production") {
 }
