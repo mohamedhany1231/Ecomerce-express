@@ -10,6 +10,7 @@ const compression = require("compression");
 const booksRouter = require("./routers/bookRouter");
 const usersRouter = require("./routers/userRouter");
 const reviewsRouter = require("./routers/reviewRouter");
+const cartRouter = require("./routers/cartRouter");
 const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
@@ -53,6 +54,7 @@ app.use(compression());
 app.use("/api/v1/books", booksRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/reviews", reviewsRouter);
+app.use("/api/v1/cart", cartRouter);
 
 app.use("*", (req, res, next) => {
   res.status(404).json({ status: "failure", message: "route does not exist" });

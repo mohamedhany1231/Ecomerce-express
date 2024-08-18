@@ -76,7 +76,7 @@ exports.resizeBookImages = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.createBook = factoryController.createOne(Book);
+exports.topBooks = exports.createBook = factoryController.createOne(Book);
 exports.getAllBooks = factoryController.getAll(Book);
 exports.getBook = factoryController.getOne(Book);
 exports.updateBook = factoryController.updateOne(Book);

@@ -14,10 +14,12 @@ router
   )
   .get(reviewController.getAllReviews);
 
+router.use(authController.protect);
+
 router
   .route("/:id")
   .get(reviewController.getReview)
-  .delete(reviewController.deleteReview)
-  .patch(reviewController.updateReview);
+  .delete(reviewController.authorizeReview, reviewController.deleteReview)
+  .patch(reviewController.authorizeReview, reviewController.updateReview);
 
 module.exports = router;

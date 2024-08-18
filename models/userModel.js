@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const Book = require("./bookModel");
+
+const cartItem = new mongoose.Schema({
+  book: { type: mongoose.Types.ObjectId, ref: "Book", required: true },
+  count: {
+    type: Number,
+    default: 1,
+  },
+});
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -39,10 +48,20 @@ const userSchema = new mongoose.Schema({
   },
   passwordChangedAt: { type: Date, default: Date.now() },
   role: { type: String, default: "user", enum: ["admin", "user"] },
+
+  cart: [cartItem],
 });
+
+userSchema.pre(/^find/, async function (next) {
+  this.populate("cart.book");
+  next();
+});
+
 userSchema.pre("save", async function (next) {
-  this.password = await bcrypt.hash(this.password, 12);
-  this.confirmPassword = undefined;
+  if (this.password) {
+    this.password = await bcrypt.hash(this.password, 12);
+    this.confirmPassword = undefined;
+  }
   next();
 });
 
