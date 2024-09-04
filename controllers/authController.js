@@ -11,7 +11,6 @@ const signToken = (id) =>
   });
 
 const sendSignToken = (res, user, statusCode, req) => {
-  console.log("sendSignToken");
   const token = signToken(user.id);
 
   const cookieOptions = {
@@ -27,7 +26,6 @@ const sendSignToken = (res, user, statusCode, req) => {
     path: "/",
   };
 
-  console.log(cookieOptions);
   res.cookie("jwt", token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
@@ -46,7 +44,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  console.log("logging in");
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new AppError("please provide email and password", 400));

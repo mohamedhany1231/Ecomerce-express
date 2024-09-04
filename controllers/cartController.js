@@ -9,15 +9,11 @@ exports.addToCart = catchAsync(async (req, res, next) => {
   if (Math.round(count) !== count)
     return next(new AppError("count must be integer", 400));
 
-  console.log(count);
-
   const book = await Book.findById(bookId);
   if (!book) return next(new AppError("invalid book id", 400));
 
   let user;
   if (req.user.cart.find((c) => c.book?._id?.toString() === bookId)) {
-    console.log("book already exists");
-
     await req.user.save({ validateBeforeSave: false });
     user = await User.findOneAndUpdate(
       { _id: req.user.id, "cart.book": bookId },
@@ -51,7 +47,7 @@ exports.addToCart = catchAsync(async (req, res, next) => {
 });
 
 exports.removeFromCart = catchAsync(async (req, res, next) => {
-  const { book: bookId } = req.body;
+  const { bookId } = req.params;
 
   const user = await User.findOneAndUpdate(
     { _id: req.user.id },
