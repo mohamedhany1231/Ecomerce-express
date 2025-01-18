@@ -4,7 +4,7 @@ module.exports = class {
     this.query = query;
   }
   filter() {
-    const excludedFields = ["sort", "fields", "limit", "page"];
+    const excludedFields = ["sort", "fields", "limit", "page", "search"];
     const filters = { ...this.queryString };
     excludedFields.forEach((field) => {
       delete filters[field];
@@ -13,7 +13,12 @@ module.exports = class {
     let queryStr = JSON.stringify(filters);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    this.query = this.query.find(JSON.parse(queryStr));
+    const queryObj = JSON.parse(queryStr);
+
+    if (this.queryString.search)
+      queryObj["$text"] = { $search: this.queryString.search };
+
+    this.query = this.query.find(queryObj);
     return this;
   }
   sort() {
