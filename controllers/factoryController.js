@@ -24,6 +24,7 @@ exports.getOne = (Model) =>
 
     const id = req.params.id;
     const data = await Model.findById(id);
+
     res.status(200).json({ status: "success", data: { [dataLabel]: data } });
   });
 
@@ -31,6 +32,7 @@ exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const dataLabel = Model.modelName.toLowerCase();
     const id = req.params.id;
+
     const data = await Model.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
